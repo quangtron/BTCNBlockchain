@@ -1,0 +1,20 @@
+{
+  "name": "blockchain-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "Block.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-handlebars": "^4.0.4",
+    "express-handlebars-sections": "^1.0.1",
+    "faker": "^4.1.0",
+    "moment": "^2.25.3",
+    "morgan": "^1.10.0"
+  }
+}
