@@ -55,8 +55,8 @@ class Blockchain {
   generateNextBlock(data) {
     const nextIndex = this.latestBlock.index + 1;
     const previousHash = this.latestBlock.hash;
-    let timestamp = new Date().getTime();
-    // let timestamp = moment().unix();
+    // let timestamp = new Date().getTime();
+    let timestamp = moment().unix();
     let nonce = 0;
     let nextHash = this.calculateHash(
       nextIndex,
