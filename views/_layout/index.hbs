@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" >
+    {{{_sections.css}}}
     <title>Blockchain</title>
 </head>
 <body>
@@ -11,120 +12,13 @@
         <div style="text-align: center; color: #304FFE; margin: 30px; margin-bottom: 70px;">
             <h1>BLOCKCHAIN DEMO</h1><hr />
         </div>
-        <div style="margin-bottom: 50px;">
-            <div style="display: flex; flex-direction: row; margin-bottom: 20px">
-                <h2 style="color: #d50000;">WALLETS</h2>
-                <form action="/" method="POST">
-                    <button type="submit" id="btn" class="btn btn-light" style="margin-left: 20px;">+ ADD NEW WALLET</button>
-                </form>
-            </div>
-            {{#each wallets}}
-            {{#if active}}
-            <a href="/{{w_Id}}" style="margin-right: 20px; margin-bottom: 10px" class="btn btn-outline-success active">{{walletName}}</a>
-            {{else}}
-            <a href="/{{w_Id}}" style="margin-right: 20px; margin-bottom: 10px" class="btn btn-outline-success">{{walletName}}</a>
-            {{/if}}
-            {{/each}}
-        </div>
-        {{#if wallets}}
-        <div>
-            <div>
-                <p>Your public address:</p>
-                <p>{{wallet.publicAddress}}</p>
-            </div><br />
-            <div>
-                <p>Your balance:</p>
-                <p>{{wallet.balance}}</p>
-            </div><br />
-            <div>
-                <p>Send coins</p>
-                <form action="/{{wallet.w_Id}}/sendCoins" method="POST">
-                    <div>
-                        <div>
-                            <p>Reciever address</p>
-                            <input type="text" class="form-control" id="basic-url" name="address" aria-describedby="basic-addon3">
-                        </div>
-                        <div>
-                            <p>Amount</p>
-                            <input type="number" class="form-control" id="basic-url" name="amount" aria-describedby="basic-addon3">
-                        </div>
-                    </div>
-                    <button type="submit" id="btn" class="btn btn-primary">SEND</button>
-                </form>
-            </div><br />
-            <div>
-                <p>Transaction pool</p>
-                {{#if wallet.transactionsPool}}
-                {{#each wallet.transactionsPool}}
-                <p>TxId: {{txId}}</p>
-                {{#each txIns}}
-                {{#each data}}
-                <p>{{id}}</p>
-                {{/each}}
-                {{/each}}
-                {{/each}}
-                {{else}}
-                <p>No transactions in transaction pool</p>
-                {{/if}}
-            </div><br />
-            <div>
-                <p>Mine block</p>
-                <form action="/{{wallet.w_Id}}" method="POST">
-                    <button type="submit" id="btn" class="btn btn-primary">CLICK TO MINE BLOCK</button>
-                </form>
-                <a href="/{{wallet.w_Id}}/transactions" style="margin-right: 20px; margin-bottom: 10px" class="btn btn-outline-success">
-                    GO TO TRANSACTIONS
-                </a>
-            </div>
-        </div>
-        {{/if}}
-        <!-- <div style="display: flex; flex-direction: column; align-items: center;">
-            <div style="margin-bottom: 20px;">
-                <h2>BLOCKCHAIN</h2>
-            </div>
-            {{#each this.list}}
-            <div class="card" style="width: 55%; border-radius: 15px; margin-bottom: 70px;">
-                <div class="card-body shadow" style="border-radius: 15px;">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text" id="basic-addon3">DATA</span>
-                        </div>
-                        <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="{{data}}">
-                    </div>
-                    <div style="display: flex; flex-direction: row;">
-                        <p>PREVIOUS HASH:</p>&nbsp;&nbsp;
-                        <p class="text-success">{{previousHash}}</p>
-                    </div>
-                    <div style="display: flex; flex-direction: row;">
-                        <p>HASH:</p>&nbsp;&nbsp;
-                        <input type="text" style=" width: 90%; padding-left: 10px; color: #00C853; border-radius: 5px; margin-bottom: 10px; border: 1px solid #00C853;" value="{{hash}}" disabled >
-                    </div>
-                    <div style="display: flex; flex-direction: row; justify-content: space-between; margin-top: 40px; margin-right: 10px;">
-                        <h3>Block #{{index}}</h3>
-                        <p style="padding-top: 10px; color: lightslategray;">{{timestamp}}</p>
-                        <input style="text-align: center; width: 100px; border-radius: 5px; margin-bottom: 10px; border: 1px solid #000;" type="text" value="{{nonce}}" disabled>
-                    </div>
-                </div>
-            </div>
-            {{/each}}
-            <div class="card" style="width: 50%; border-radius: 15px; margin-bottom: 70px;">
-                <div class="card-body shadow" style="border-radius: 15px;">
-                    <form method="post" action="/{{id}}" style="display: flex; flex-direction: column; align-items: center;">
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon3">DATA</span>
-                            </div>
-                            <input type="text" class="form-control" id="basic-url" name="data">
-                        </div>
-                        <button type="submit" id="btn" class="btn btn-primary">+ ADD NEW BLOCK</button>
-                    </form>
-                </div>
-            </div>
-        </div> -->
+        
+        {{{body}}}
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" ></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" ></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" ></script>
+    {{{_sections.js}}}
 </body>
 </html>

@@ -1,0 +1,86 @@
+<div>
+    <div style="margin-bottom: 50px;">
+        <div style="display: flex; flex-direction: row; margin-bottom: 20px">
+            <h2 style="color: #d50000;">WALLETS</h2>
+            <form action="/" method="POST">
+                <button type="submit" id="btn" class="btn btn-light" style="margin-left: 20px;">+ ADD NEW WALLET</button>
+            </form>
+        </div>
+        {{#each wallets}}
+        {{#if active}}
+        <a href="/{{w_Id}}" style="margin-right: 20px; margin-bottom: 10px" class="btn btn-outline-success active">{{walletName}}</a>
+        {{else}}
+        <a href="/{{w_Id}}" style="margin-right: 20px; margin-bottom: 10px" class="btn btn-outline-success">{{walletName}}</a>
+        {{/if}}
+        {{/each}}
+    </div>
+    {{#if wallets}}
+    <div>
+        <div>
+            <h4>Your public address:</h4>
+            <p class="text-success">{{wallet.publicAddress}}</p>
+        </div><br />
+        <div>
+            <h4>Your balance:</h4>
+            <p class="text-success">{{wallet.balance}}</p>
+        </div><br />
+        <div>
+            <h4>Send coins</h4>
+            <form action="/{{wallet.w_Id}}/sendCoins" method="POST">
+                <div style="margin-bottom: 20px;">
+                    <div>
+                        <p class="text-success">Reciever address</p>
+                        <input type="text" class="form-control" id="basic-url" name="address" aria-describedby="basic-addon3">
+                    </div>
+                    <div>
+                        <p class="text-success">Amount</p>
+                        <input type="number" style="width: 100px;" class="form-control" id="basic-url" name="amount" aria-describedby="basic-addon3">
+                    </div>
+                </div>
+                <button type="submit" id="btn" class="btn btn-primary">SEND</button>
+            </form>
+        </div><br />
+        <div>
+            <h3 style="margin-bottom: 50px; margin-top: 50px">Transaction pool</h3>
+            {{#if wallet.transactionsPool}}
+            {{#each wallet.transactionsPool}}
+            <div>
+                <p>TxID: <span class="text-success">{{txId}}</span></p>
+            </div>
+            <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                <div>
+                    {{#each txIns}}
+                    {{#each data}}
+                    <p>{{id}}</p>
+                    {{/each}}
+                    {{/each}}
+                </div>
+                <p>--></p>
+                {{#each txOuts}}
+                <div style="width: 350px;">
+                    <p style="word-wrap: break-word;">{{address}}</p>
+                    {{#if amount}}
+                    <p>Amount: {{amount}}</p>
+                    {{/if}}
+                </div>
+                {{/each}}
+            </div>
+            {{/each}}
+            {{else}}
+            <p>No transactions in transaction pool</p>
+            {{/if}}
+        </div><br />
+        <div>
+            <h4>Mine block</h4>
+            <div style="display: flex; flex-direction: row">
+                <form action="/{{wallet.w_Id}}" method="POST">
+                    <button type="submit" id="btn" class="btn btn-primary">CLICK TO MINE BLOCK</button>
+                </form>
+                <a href="/{{wallet.w_Id}}/transactions" style="margin-left: 30px;" class="btn btn-outline-success">
+                    GO TO TRANSACTIONS
+                </a>
+            </div>
+        </div>
+    </div>
+    {{/if}}
+</div>

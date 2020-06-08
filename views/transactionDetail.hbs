@@ -1,0 +1,59 @@
+<div style="display: flex; flex-direction: column; align-items: center;">
+    <div style="margin-bottom: 20px;">
+        <h2>BLOCKCHAIN</h2>
+    </div>
+    <a href="/{{wallet.w_Id}}/transactions" style="margin-right: 20px; margin-bottom: 10px" class="btn btn-outline-success">
+        BACK TO HISTORY
+    </a>
+    <div class="card" style="width: 60%; border-radius: 15px; margin-bottom: 70px;">
+        <div class="card-body shadow" style="border-radius: 15px;">
+            <div style="display: flex; flex-direction: row; justify-content: space-between; margin-right: 10px;">
+                <h3>Block #{{block.index}}</h3>
+                <p style="padding-top: 10px; color: lightslategray;">{{block.timestamp}}</p>
+                <input style="text-align: center; width: 100px; border-radius: 5px; margin-bottom: 10px; border: 1px solid #000;" type="text" value="{{block.nonce}}" disabled>
+            </div>
+            <div style="display: flex; flex-direction: row;">
+                <p>PREVIOUS HASH:</p>&nbsp;&nbsp;
+                <p class="text-success">{{block.previousHash}}</p>
+            </div>
+            <div style="display: flex; flex-direction: row;">
+                <p>HASH:</p>&nbsp;&nbsp;
+                <input type="text" style=" width: 90%; padding-left: 10px; color: #00C853; border-radius: 5px; margin-bottom: 10px; border: 1px solid #00C853;" value="{{block.hash}}" disabled >
+            </div>
+            <div style="display: flex; flex-direction: row;">
+                <p>DIFFICULTY:</p>&nbsp;&nbsp;
+                <p class="text-success">{{difficulty}}</p>
+            </div>
+            <div style="display: flex; flex-direction: row;">
+                <p>NUMBER OF TRANSACTIONS:</p>&nbsp;&nbsp;
+                <p class="text-success">{{block.data.length}}</p>
+            </div>
+            <div style="margin-top: 100px;">
+                <h1>TRANSACTIONS</h1>
+                {{#each block.data}}
+                <div>
+                    <p>TxID: <span class="text-success">{{id}}</span></p>
+                </div>
+                <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                    <div>
+                        {{#each txIns}}
+                        {{#if txOutId}}
+                        <p style="width: 250px;">{{txOutId}}</p>
+                        {{else}}
+                        <p>coinbase</p>
+                        {{/if}}
+                        {{/each}}
+                    </div>
+                    <p>--></p>
+                    {{#each txOuts}}
+                    <div>
+                        <p style="width: 350px;">{{address}}</p>
+                        <p>Amount: {{amount}}</p>
+                    </div>
+                    {{/each}}
+                </div>
+                {{/each}}
+            </div>
+        <div>  
+    </div>
+</div>

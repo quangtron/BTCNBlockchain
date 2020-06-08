@@ -7,7 +7,7 @@ const moment = require('moment');
 
 const Blockchain = require('./Blockchain');
 const {getPublicFromWallet} = require('./Wallet');
-const {getCoinbaseTransaction, UnspentTxOut, getTransactionId, getUnspentTxOutsForTransaction} = require('./Transactions');
+const {getCoinbaseTransaction, UnspentTxOut, getCoinTransaction, getUnspentTxOutsForTransaction} = require('./Transactions');
 
 const app = express();
 
@@ -29,51 +29,55 @@ app.set('view engine', 'hbs');
 const wallets = [];
 
 app.get('/', (req, res, next) => {
-    res.render('_layout/index');
+    res.render('home');
 })
 
 app.get('/:id', (req, res, next) => {
     const id = req.params.id;
-    // const listBlock = wallets[id].blockchains.get();
     
     for(let i = 0; i < wallets.length; i++){
         wallets[i].active = false;
     }
     wallets[id].active = true;
 
-    // for(item of listBlock){
-    //     const ts = moment(item.timestamp).format('LLLL');
-    //     item.timestamp = ts;
-    // }
-    for(let item of wallets[id].transactionsPool){
-        // console.log(1);
-        for(let i of item.txIns){
-            // for(let j of i.data){
-            //     console.log(j);
-            // }
-            console.log(i.data);
-        }
-    }
     console.log('pool: ', wallets[id].transactionsPool);
     console.log('uns: ', wallets[id].unspentTxOuts);
-    
-    res.render('_layout/index', {wallet: wallets[id], wallets});
+    res.render('home', {wallet: wallets[id], wallets});
 })
 
 app.get('/:id/transactions', (req, res, next) => {
     const id = req.params.id;
     const hash = wallets[id].blockchains.blockchain[0].hash;
 
-    res.render('transactions', {wallet: wallets[id], hash, layout: false});
+    res.render('transactions', {wallet: wallets[id], hash});
+})
+
+app.get('/:id/transactions/:b_id', (req, res, next) => {
+    const id = req.params.id;
+    const b_id = req.params.b_id;
+    console.log(wallets[id].blockchains.blockchain[b_id]);
+    for(let i of wallets[id].blockchains.blockchain[b_id].data){
+        console.log('zzvz', i.txIns);
+    }
+
+    res.render('transactionDetail', {block: wallets[id].blockchains.blockchain[b_id], difficulty: wallets[id].blockchains.difficulty, wallet: wallets[id]});
 })
 
 app.post('/:id', (req, res, next) => {
     const id = req.params.id;
     const address = wallets[id].publicAddress;
     const blockIndex = wallets[id].blockchains.blockchain.length;
+    const data = [];
 
     const t = getCoinbaseTransaction(address, blockIndex);
-    wallets[id].blockchains.mine([t]);
+    data.push(t);
+
+    for(let item of wallets[id].transactionsPool){
+        const tran = getCoinTransaction(blockIndex, item);
+        data.push(tran);
+    }
+
+    wallets[id].blockchains.mine(data);
 
     const uns = new UnspentTxOut('', blockIndex, address, 50);
     wallets[id].unspentTxOuts.push(uns);
@@ -84,6 +88,8 @@ app.post('/:id', (req, res, next) => {
     for(let unspentTxOut of wallets[id].unspentTxOuts){
         wallets[id].balance += unspentTxOut.amount;
     }
+
+    wallets[id].transactionsPool = [];
 
     res.redirect(`/${id}`);
 })
@@ -100,7 +106,7 @@ app.post('/:id/sendCoins', (req, res, next) => {
 })
 
 app.post('/', (req, res, next) => {
-    const w_Id = wallets.length || 0;
+    const w_Id = wallets.length;
     const publicAddress = getPublicFromWallet();
     const balance = 0;
     const blockchains = new Blockchain;

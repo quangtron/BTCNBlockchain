@@ -1,41 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" >
-    <title>Blockchain</title>
-</head>
-<body>
-    <div style="margin: 30px;">
-        <div style="text-align: center; color: #304FFE; margin: 30px; margin-bottom: 70px;">
-            <h1>BLOCKCHAIN DEMO</h1><hr />
-        </div>
-        <p>HISTORY TRANSACTIONS</p>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Hash</th>
-                    <th>Transactions</th>
-                    <th>Timestamp</th>
-                </tr>
-            </thead>
-            <tbody>
-                {{#each wallet.blockchains.blockchain}}
-                <tr>
-                    <td scope="row">{{index}}</td>
-                    <td>{{hash}}</td>
-                    <td>{{data.length}}</td>
-                    <td>{{timestamp}}</td>
-                </tr>
-                {{/each}}
-            </tbody>
-        </table>
-    </div>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" ></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" ></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" ></script>
-</body>
-</html>
+<div>
+    <a href="/{{wallet.w_Id}}" style="margin-right: 20px; margin-bottom: 30px" class="btn btn-outline-success">
+        BACK TO HOME
+    </a>
+    <h3>TRANSACTIONS HISTORY</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Hash</th>
+                <th>Transactions</th>
+                <th>Timestamp</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each wallet.blockchains.blockchain}}
+            <tr>
+                <td scope="row">{{index}}</td>
+                {{!-- <td>{{hash}}</td> --}}
+                <td>
+                    <a href="/{{../wallet.w_Id}}/transactions/{{index}}" style="margin-right: 20px; margin-bottom: 10px" class="btn btn-outline-success">
+                        {{hash}}
+                    </a>
+                </td>
+                <td>{{data.length}}</td>
+                <td>{{timestamp}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
